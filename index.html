@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Random Name Generator</title>
+    <meta charset="UTF-8">
+    <link rel="icon" href="https://img.icons8.com/external-justicon-flat-justicon/64/000000/external-dice-gambling-justicon-flat-justicon.png">
+    <script>
+      function generate()
+      {
+        Math.random();
+        min = parseInt(document.getElementById("min").value);
+        max = parseInt(document.getElementById("max").value);
+        number_of_names = parseInt(document.getElementById("number").value);
+        min_vowels = parseInt(document.getElementById("vowels").value);
+        names = "";
+        if(max<min)
+        {
+          max = min;
+          document.getElementById("max").value = min;
+        }
+        if(min_vowels>min)
+        {
+          min_vowels = min;
+          document.getElementById("vowels").value = min;
+        }
+
+        for(i=0; i<number_of_names; i++)
+        {
+          word = "";
+          num_letters = min + Math.floor(Math.random() * (1+max-min));
+          vowels = 0;
+          for(j=0; j<num_letters; j++)
+          {
+            letter = 97 + Math.floor(Math.random() * 26);
+            if( letter == 97 ||
+                letter == 101 ||
+                letter == 105 ||
+                letter == 111 ||
+                letter == 117) {vowels += 1;}
+            word += String.fromCharCode(letter);
+          }
+          if(vowels >= min_vowels)
+          {
+            names += word + "\n";
+          }
+          else
+          {
+            i -= 1;
+          }
+        }
+        document.getElementById("names").value = names;
+      }
+
+      function cleary()
+      {
+        document.getElementById("names").value = "";
+      }
+
+      var color_scheme = 1;
+
+      function switch_col()
+      {
+        if(color_scheme == 1)
+        {
+          document.getElementById("names").style.backgroundColor = "rgb(0, 0, 0)";
+          document.getElementById("names").style.color = "rgb(255, 255, 255)";
+          color_scheme = 2;
+        }
+        else if(color_scheme === 2)
+        {
+          document.getElementById("names").style.backgroundColor = "rgb(0, 0, 0)";
+          document.getElementById("names").style.color = "rgb(255, 0, 0)";
+          color_scheme = 3;
+        }
+        else
+        {
+          document.getElementById("names").style.backgroundColor = "rgb(255, 255, 255)";
+          document.getElementById("names").style.color = "rgb(0, 0, 0)";
+          color_scheme = 1;
+        }
+      }
+    </script>
+
+    <style>
+      body
+      {
+        background-color: #000000;
+        font-family: sans-serif;
+      }
+      #content
+      {
+        margin: auto;
+        background-color: #007474;
+        padding-top: 10px;
+        width: 600px;
+      }
+      h1
+      {
+        text-align: center;
+        color: #000074;
+      }
+      #config
+      {
+        background-color: #1c8e8e;
+        margin: auto;
+        width:500px;
+        padding: 10px;
+        text-align: center;
+      }
+      div input {margin-left: 10px; width: 50px;}
+      textarea
+      {
+        width:498px;
+        height:400px;
+        padding:10px;
+        display: block;
+        margin: auto;
+        margin-top: 5px;
+        text-align: center;
+        font-size: 16px;
+      }
+      #col
+      {
+        margin: auto;
+        width:500px;
+        padding: 10px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body onload="generate()">
+    <div id="content">
+      <h1>Random Name Generator</h1>
+      <div id="config">
+        <p>Minimum number of letters <input id="min" type="number" min="2" max="30" value="5"></p>
+        <p>Maximum number of letters <input id="max" type="number" min="2" max="30" value="7"></p>
+        <p>Minimum number of vowels <input id="vowels" type="number" min="0" max="20" value="3"></p>
+        <p>Number of names <input id="number" type="number" min="1" max="50" value="20"></p>
+        <button type="button" onclick="generate()">Create Names</button>
+        <button type="button" onclick="cleary()">Clear Names</button>
+      </div>
+      <textarea id="names"></textarea>
+      <div id="col"><button type="button" onclick="switch_col()">Change Colors</button></div>
+    </div>
+  </body>
+</html>
